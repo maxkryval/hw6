@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  client_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    container_name: client_service
+
+  scheduler_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.scheduler
+    environment:
+      - MAIN_SERVICE_URL=http://client_service:8000
+    ports:
+      - "8001:8001"
+    container_name: scheduler_service
